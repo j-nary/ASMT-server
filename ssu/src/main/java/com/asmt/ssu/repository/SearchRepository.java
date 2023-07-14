@@ -19,7 +19,7 @@ public class SearchRepository {
 
     public List<SearchDTO> findResultByLowPrice(SearchForm searchForm) {
         return em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school, m.menuName, m.menuPrice, m.menuImg)" +
-                        " from Menu m join m.place p where p.school = :school and m.menuPrice between :minValue and :maxValue order by m.menuPrice "+ searchForm.getSortMethod(), SearchDTO.class)
+                        " from Menu m join m.place p where p.school = :school and m.menuPrice between :minValue and :maxValue order by "+ searchForm.getSortResult(), SearchDTO.class)
                 .setParameter("school", searchForm.getSchool())
                 .setParameter("minValue", searchForm.getMinimumPrice())
                 .setParameter("maxValue", searchForm.getMaximumPrice())
@@ -36,7 +36,7 @@ public class SearchRepository {
         }
         String jpql = jpqlBuilder.toString();
         TypedQuery<SearchDTO> resultQuery = em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school, m.menuName, m.menuPrice, m.menuImg)" +
-                        " from Menu m join m.place p where p.school = :school and " + jpql + " and  m.menuPrice between :minValue and :maxValue order by m.menuPrice "+ searchForm.getSortMethod(), SearchDTO.class)
+                        " from Menu m join m.place p where p.school = :school and (" + jpql + ") and  m.menuPrice between :minValue and :maxValue order by "+ searchForm.getSortResult(), SearchDTO.class)
                 .setParameter("school", searchForm.getSchool())
                 .setParameter("minValue", searchForm.getMinimumPrice())
                 .setParameter("maxValue", searchForm.getMaximumPrice());

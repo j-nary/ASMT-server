@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("안숭맛춤 API V1")
-                .pathsToMatch("/api/**")
+                .pathsToMatch("/**")
                 .build();
     }
 
