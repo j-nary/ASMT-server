@@ -41,4 +41,3 @@ def get_distance_between_to_address(addr1, addr2):
     return __get_distance_result__(x1, y1, x2, y2)
 
 
-print(get_distance_between_to_address("서울 동작구 사당로 22 창주빌딩", "서울 동작구 사당로 50"))

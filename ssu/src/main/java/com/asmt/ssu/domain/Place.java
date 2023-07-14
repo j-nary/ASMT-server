@@ -21,5 +21,7 @@ public class Place {
     @Column(columnDefinition = "text")
     private String placeLink;
 
-    private float place_rating;
+    private Integer placeDistance;
+
+    private float placeRating;
 }

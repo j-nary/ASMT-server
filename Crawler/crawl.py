@@ -6,6 +6,23 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+import getDistance
+
+
+def extract_number(string):
+    # 변동이나 ~ 패턴이 포함된 경우 0 반환
+    if "변동" in string or "~" in string:
+        return 0
+    
+    # 숫자 추출
+    numbers = re.sub(r"[^\d]", "", string)
+    
+    # 추출된 숫자가 비어있는 경우 0 반환
+    if not numbers:
+        return 0
+    
+    # 숫자 반환
+    return int(numbers)
 
 
 def get_picture_link(el):
@@ -66,6 +83,7 @@ def crawl_without_naver_order(driver, i):
                 "star": stars,
                 "locate": driver.find_element(By.CLASS_NAME, "LDgIH").text
                 }
+        info["distance"] = getDistance.get_distance_between_to_address("서울 동작구 흑석로 84", info["locate"])
         driver.get("https://m.place.naver.com/restaurant/%s/menu/list" % i)
         time.sleep(0.8)
         driver.implicitly_wait(0)
@@ -77,7 +95,7 @@ def crawl_without_naver_order(driver, i):
                 # menus.append([names.text, price.text, None])
                 a_menu = {
                     "food_name" : names.text,
-                    "price" : price.text,
+                    "price" : extract_number(price.text),
                     "img_src" : None
                 }
                 menus.append(a_menu)
@@ -89,7 +107,7 @@ def crawl_without_naver_order(driver, i):
                                             driver.find_elements(By.CLASS_NAME, "YBmM2")):
                 a_menu = {
                     "food_name" : names.text,
-                    "price" : price.text,
+                    "price" : extract_number(price.text),
                     "img_src" : get_picture_link(picture)
                 }
                 menus.append(a_menu)
@@ -116,6 +134,7 @@ def crawl_with_naver_order(driver, i):
             "star": stars,
             "locate": driver.find_element(By.CLASS_NAME,"IH7VW").text
             }
+    info["distance"] = getDistance.get_distance_between_to_address("서울 관악구 관악로 1", info["locate"])
     driver.get("https://m.place.naver.com/restaurant/%s/menu/list" % i)
     time.sleep(0.8)
     # Todo : 이미지 리스트 구분해서 menus에 append 한 뒤에 info return
@@ -123,13 +142,13 @@ def crawl_with_naver_order(driver, i):
     for menu in driver.find_elements(By.CLASS_NAME, "order_list_item"):
         if len(menu.find_elements(By.CSS_SELECTOR, ".img_box.no_img")) == 0:
             name = menu.find_element(By.CLASS_NAME, "tit").text
-            price = menu.find_element(By.CLASS_NAME, "price").text
+            price = extract_number(menu.find_element(By.CLASS_NAME, "price").text)
             img_src = get_picture_link_with_naver(menu)
             menus.append([name, price, img_src])
             menu_names.append(name)
         else:
             name = menu.find_element(By.CLASS_NAME, "tit").text
-            price = menu.find_element(By.CLASS_NAME, "price").text
+            price = extract_number(menu.find_element(By.CLASS_NAME, "price").text)
             menus.append([name, price, None])
             menu_names.append(name)
 

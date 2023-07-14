@@ -9,21 +9,21 @@ import json
 # db = client.jdb
 # collection = db.foods
 
-save_unique_number(["중앙대맛집"])
+# save_unique_number(["가톨릭대","강서대","감리교신학대","건국대","경기대","경희대","고려대","광운대","국민대"])
 
 
-# result = get_result("서울대맛집")
+result = get_result("중앙대맛집")
 
-# json_data = json.dumps(result, ensure_ascii=False)
+json_data = json.dumps(result, ensure_ascii=False)
 
-# # JSON 파일로 저장할 경로와 파일 이름을 지정합니다.
-# file_path = "snu.json"
+# JSON 파일로 저장할 경로와 파일 이름을 지정합니다.
+file_path = "cau.json"
 
-# # JSON 파일로 저장합니다.
-# with open(file_path, "w", encoding="utf-8") as json_file:
-#     json_file.write(json_data)
+# JSON 파일로 저장합니다.
+with open(file_path, "w", encoding="utf-8") as json_file:
+    json_file.write(json_data)
 
-# print("JSON 파일이 성공적으로 저장되었습니다.")
+print("JSON 파일이 성공적으로 저장되었습니다.")
 
 # print(result)
 # count=1
