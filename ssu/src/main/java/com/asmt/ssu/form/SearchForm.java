@@ -3,7 +3,6 @@ package com.asmt.ssu.form;
 import com.asmt.ssu.domain.School;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -57,7 +56,7 @@ public class SearchForm {
         }
     }
 
-    public String getSortResult() {
+    public String makeSortResult() {
         if (sortMethod.equals("lowPrice")){
             return "m.menuPrice asc";
         }

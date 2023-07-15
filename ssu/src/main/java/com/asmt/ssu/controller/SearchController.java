@@ -3,18 +3,23 @@ package com.asmt.ssu.controller;
 
 import com.asmt.ssu.ErrorResult;
 import com.asmt.ssu.IllegalArgumentException;
+import com.asmt.ssu.domain.School;
 import com.asmt.ssu.domain.SearchDTO;
 import com.asmt.ssu.form.SearchForm;
+import com.asmt.ssu.service.RankService;
 import com.asmt.ssu.service.SearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +29,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
     private final SearchService searchService;
+    private final RankService rankService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
@@ -47,6 +53,20 @@ public class SearchController {
         } catch (Exception e){
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
+    }
+
+    @GetMapping("/api/rank")
+    public List<SearchDTO> getDailyRanking(@RequestParam int rankCount,
+                                           @RequestParam School school){
+        return rankService.getDailyRank(rankCount, school);
+    }
+
+    @PostMapping("/api/rank")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> addHitDailyRanking(@RequestParam @Positive @Valid Long menuId){
+
+        rankService.addMenuToRank(menuId);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
 }

@@ -21,6 +21,9 @@ public class SearchDTO {
     @Schema(description = "소속 학교", example = "ssu")
     private School school;
 
+
+    @Schema(description = "메뉴 아이디", example = "84118")
+    private Long menuId;
     @Schema(description = "메뉴 이름", example = "제계치2")
     private String menuName;
     @Schema(description = "메뉴 가격", example = "150000")
@@ -29,15 +32,29 @@ public class SearchDTO {
     @Schema(description = "메뉴 이미지", nullable = true, example = "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https://ldb-phinf.pstatic.net/20200116_202/1579159139861EGFkk_JPEG/570619_286_20170526164736.jpg")
     private String menuImg;
 
-    public SearchDTO(String placeName, String placeAddress, float placeRating, String placeLink, int placeDistance, School school, String menuName, int menuPrice, String menuImg) {
+    public SearchDTO(String placeName, String placeAddress, float placeRating, String placeLink, int placeDistance, School school, Long menuId, String menuName, int menuPrice, String menuImg) {
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.placeRating = placeRating;
         this.placeLink = placeLink;
         this.placeDistance = placeDistance;
         this.school = school;
+        this.menuId = menuId;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuImg = menuImg;
+    }
+
+    public SearchDTO(Menu menu){
+        this.placeName = menu.getPlace().getPlaceName();
+        this.placeAddress = menu.getPlace().getPlaceAddress();
+        this.placeRating = menu.getPlace().getPlaceRating();
+        this.placeLink = menu.getPlace().getPlaceLink();
+        this.placeDistance = menu.getPlace().getPlaceDistance();
+        this.school = menu.getPlace().getSchool();
+        this.menuId = menu.getId();
+        this.menuName = menu.getMenuName();
+        this.menuPrice = menu.getMenuPrice();
+        this.menuImg = menu.getMenuImg();
     }
 }

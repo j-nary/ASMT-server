@@ -1,6 +1,7 @@
 package com.asmt.ssu.domain;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Hit {
 
     @Id @GeneratedValue
@@ -19,4 +20,13 @@ public class Hit {
     private Menu menu;
 
     private LocalDateTime hitTime;
+
+    @Builder
+    public Hit(Menu menu, LocalDateTime hitTime) {
+        this.menu = menu;
+        this.hitTime = hitTime;
+    }
+
+    public Hit() {
+    }
 }
