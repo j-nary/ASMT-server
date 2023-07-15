@@ -1,8 +1,8 @@
 package com.asmt.ssu.controller;
 
 
-import com.asmt.ssu.ErrorResult;
-import com.asmt.ssu.IllegalArgumentException;
+import com.asmt.ssu.exception.ErrorResult;
+import com.asmt.ssu.exception.IllegalArgumentException;
 import com.asmt.ssu.domain.School;
 import com.asmt.ssu.domain.SearchDTO;
 import com.asmt.ssu.form.SearchForm;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Slf4j
@@ -31,12 +30,6 @@ public class SearchController {
     private final SearchService searchService;
     private final RankService rankService;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResult illegalArgumentHandler(IllegalArgumentException e){
-        log.error("illegalArgumentException = {}", e);
-        return new ErrorResult("BAD_REQUEST", e.getMessage());
-    }
 
     @PostMapping("/api/search")
     @Operation(summary = "메뉴 검색", description = "json을 받아 조건에 맞춰 메뉴 리스트를 반환합니다.")
@@ -48,11 +41,7 @@ public class SearchController {
             throw new IllegalArgumentException("입력이 잘못되었습니다." + bindingResult.getAllErrors());
         }
 
-        try {
-            return searchService.getResult(searchForm);
-        } catch (Exception e){
-            throw new IllegalArgumentException("입력이 잘못되었습니다.");
-        }
+        return searchService.getResult(searchForm);
     }
 
     @GetMapping("/api/rank")
