@@ -35,27 +35,13 @@ public class SearchController {
     @Operation(summary = "메뉴 검색", description = "json을 받아 조건에 맞춰 메뉴 리스트를 반환합니다.")
     public List<SearchDTO> lowPrice(@RequestBody @Valid SearchForm searchForm,
                                     BindingResult bindingResult) throws IllegalArgumentException {
-        log.info("value = {}", searchForm.getSortMethod());
         if (bindingResult.hasErrors()) {
-            log.error("binding = {}", bindingResult.getAllErrors());
             throw new IllegalArgumentException("입력이 잘못되었습니다." + bindingResult.getAllErrors());
         }
 
         return searchService.getResult(searchForm);
     }
 
-    @GetMapping("/api/rank")
-    public List<SearchDTO> getDailyRanking(@RequestParam int rankCount,
-                                           @RequestParam School school){
-        return rankService.getDailyRank(rankCount, school);
-    }
 
-    @PostMapping("/api/rank")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> addHitDailyRanking(@RequestParam @Positive @Valid Long menuId){
-
-        rankService.addMenuToRank(menuId);
-        return new ResponseEntity<>("Success", HttpStatus.CREATED);
-    }
 
 }
