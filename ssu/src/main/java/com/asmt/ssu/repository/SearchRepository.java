@@ -18,11 +18,14 @@ public class SearchRepository {
 
 
     public List<SearchDTO> findResultByLowPrice(SearchForm searchForm) {
-        return em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school, m.id,m.menuName, m.menuPrice, m.menuImg)" +
-                        " from Menu m join m.place p where p.school = :school and m.menuPrice between :minValue and :maxValue order by "+ searchForm.makeSortResult(), SearchDTO.class)
+        return em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school, m.id, m.menuName, m.menuPrice, m.menuImg, CASE WHEN b.menu.id IS NULL THEN false ELSE true END)" +
+                        " from Menu m join m.place p left join Bookmark b on b.menu = m and b.userId = :userId where p.school = :school and m.menuPrice between :minValue and :maxValue order by "+ searchForm.makeSortResult(), SearchDTO.class)
                 .setParameter("school", searchForm.getSchool())
                 .setParameter("minValue", searchForm.getMinimumPrice())
                 .setParameter("maxValue", searchForm.getMaximumPrice())
+                .setParameter("userId", searchForm.getUserId())
+                .setFirstResult((searchForm.getPage() - 1) * 300)
+                .setMaxResults(searchForm.getPage() * 300)
                 .getResultList();
     }
 
@@ -35,11 +38,14 @@ public class SearchRepository {
             jpqlBuilder.append("m.menuName LIKE :searchString").append(i);
         }
         String jpql = jpqlBuilder.toString();
-        TypedQuery<SearchDTO> resultQuery = em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school,m.id , m.menuName, m.menuPrice, m.menuImg)" +
-                        " from Menu m join m.place p where p.school = :school and (" + jpql + ") and  m.menuPrice between :minValue and :maxValue order by "+ searchForm.makeSortResult(), SearchDTO.class)
+        TypedQuery<SearchDTO> resultQuery = em.createQuery("select new com.asmt.ssu.domain.SearchDTO(p.placeName, p.placeAddress, p.placeRating, p.placeLink, p.placeDistance, p.school, m.id, m.menuName, m.menuPrice, m.menuImg, CASE WHEN b.menu.id IS NULL THEN false ELSE true END)" +
+                        " from Menu m join m.place p left join Bookmark b  on b.menu = m and b.userId = :userId where p.school = :school and (" + jpql + ") and  m.menuPrice between :minValue and :maxValue order by "+ searchForm.makeSortResult(), SearchDTO.class)
                 .setParameter("school", searchForm.getSchool())
                 .setParameter("minValue", searchForm.getMinimumPrice())
-                .setParameter("maxValue", searchForm.getMaximumPrice());
+                .setParameter("maxValue", searchForm.getMaximumPrice())
+                .setParameter("userId", searchForm.getUserId())
+                .setFirstResult((searchForm.getPage() - 1) * 300)
+                .setMaxResults(searchForm.getPage() * 300 );
         for (int i = 0; i < searchForm.getSearchKeywordList().size(); i++) {
             resultQuery.setParameter("searchString" + i, "%" + searchForm.getSearchKeywordList().get(i) + "%");
         }

@@ -25,4 +25,13 @@ public class ApiExceptionHandler {
                 LocalDateTime.now());
         return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {IllegalStateException.class})
+    public ResponseEntity<Object> illegalStateExceptionHandler(IllegalStateException e){
+        ErrorResult errorResult = new ErrorResult(e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                LocalDateTime.now());
+        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+
+    }
 }

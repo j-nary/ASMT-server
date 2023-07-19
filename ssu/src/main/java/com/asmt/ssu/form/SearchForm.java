@@ -38,6 +38,13 @@ public class SearchForm {
     @NotNull
     private School school;
 
+    @NotNull
+    @Schema(description = "학교", example = "ddas")
+    private String userId;
+
+    @NotNull
+    private Integer page;
+
     public SearchForm() {
     }
 
@@ -68,4 +75,6 @@ public class SearchForm {
         }
         return null;
     }
+
+
 }

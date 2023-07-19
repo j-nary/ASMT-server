@@ -32,7 +32,11 @@ public class SearchDTO {
     @Schema(description = "메뉴 이미지", nullable = true, example = "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https://ldb-phinf.pstatic.net/20200116_202/1579159139861EGFkk_JPEG/570619_286_20170526164736.jpg")
     private String menuImg;
 
-    public SearchDTO(String placeName, String placeAddress, float placeRating, String placeLink, int placeDistance, School school, Long menuId, String menuName, int menuPrice, String menuImg) {
+    @Schema(description = "북마크 여부", nullable = true, example = "true")
+
+    private boolean isBookmarked;
+
+    public SearchDTO(String placeName, String placeAddress, float placeRating, String placeLink, int placeDistance, School school, Long menuId, String menuName, int menuPrice, String menuImg, boolean isBookmarked) {
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.placeRating = placeRating;
@@ -43,6 +47,8 @@ public class SearchDTO {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuImg = menuImg;
+        this.isBookmarked= isBookmarked;
+
     }
 
     public SearchDTO(Menu menu){
@@ -56,5 +62,19 @@ public class SearchDTO {
         this.menuName = menu.getMenuName();
         this.menuPrice = menu.getMenuPrice();
         this.menuImg = menu.getMenuImg();
+    }
+
+    public SearchDTO(Menu menu, boolean isBookmarked){
+        this.placeName = menu.getPlace().getPlaceName();
+        this.placeAddress = menu.getPlace().getPlaceAddress();
+        this.placeRating = menu.getPlace().getPlaceRating();
+        this.placeLink = menu.getPlace().getPlaceLink();
+        this.placeDistance = menu.getPlace().getPlaceDistance();
+        this.school = menu.getPlace().getSchool();
+        this.menuId = menu.getId();
+        this.menuName = menu.getMenuName();
+        this.menuPrice = menu.getMenuPrice();
+        this.menuImg = menu.getMenuImg();
+        this.isBookmarked = isBookmarked;
     }
 }

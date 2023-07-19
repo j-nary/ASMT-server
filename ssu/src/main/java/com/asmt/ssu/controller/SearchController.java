@@ -28,8 +28,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
     private final SearchService searchService;
-    private final RankService rankService;
-
 
     @PostMapping("/api/search")
     @Operation(summary = "메뉴 검색", description = "json을 받아 조건에 맞춰 메뉴 리스트를 반환합니다.")
@@ -38,10 +36,6 @@ public class SearchController {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다." + bindingResult.getAllErrors());
         }
-
         return searchService.getResult(searchForm);
     }
-
-
-
 }

@@ -17,7 +17,7 @@ public class RankRepository {
 
     public List<Menu> findRankTopN(int n, School school){
         LocalDateTime now = LocalDateTime.now();
-        return em.createQuery("select h.menu from Hit h join fetch h.menu.place p where h.hitTime between :yesterday and :now and p.school = :school group by h.menu order by count(h)", Menu.class)
+        return em.createQuery("select h.menu from Hit h join fetch h.menu.place p where h.hitTime between :yesterday and :now and p.school = :school group by h.menu order by count(h) desc ", Menu.class)
                 .setParameter("yesterday",now.minusDays(1))
                 .setParameter("now", now)
                 .setParameter("school",school)
