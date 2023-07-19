@@ -14,7 +14,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Getter @Setter
 public class BookmarkForm {
 
-    @Schema(description = "유저를 구분할수 있는 String값",example = "abcdefghihihihihi")
+    @Schema(description = "유저를 구분할수 있는 String값",example = "SSUAESPA")
     @NotBlank
     private String userId;
 

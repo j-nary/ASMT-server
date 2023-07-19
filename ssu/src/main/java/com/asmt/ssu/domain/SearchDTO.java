@@ -33,7 +33,6 @@ public class SearchDTO {
     private String menuImg;
 
     @Schema(description = "북마크 여부", nullable = true, example = "true")
-
     private boolean isBookmarked;
 
     public SearchDTO(String placeName, String placeAddress, float placeRating, String placeLink, int placeDistance, School school, Long menuId, String menuName, int menuPrice, String menuImg, boolean isBookmarked) {

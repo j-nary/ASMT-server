@@ -39,10 +39,12 @@ public class SearchForm {
     private School school;
 
     @NotNull
-    @Schema(description = "학교", example = "ddas")
+    @Schema(description = "유저 고유 키값", example = "SSU-AESPA")
     private String userId;
 
+
     @NotNull
+    @Schema(description = "페이지, 양수여야 합니다.", example = "1")
     private Integer page;
 
     public SearchForm() {
