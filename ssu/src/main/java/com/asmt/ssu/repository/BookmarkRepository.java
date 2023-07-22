@@ -36,9 +36,20 @@ public class BookmarkRepository {
         em.remove(singleResult);
     }
 
-    public List<Menu> getBookmarkedMenuList(String userId){
+    public List<Menu> getBookmarkedMenuList(String userId , String sortMethod){
+        switch (sortMethod) {
+            case "lowPrice":
+                sortMethod = "m.menuPrice ASC";
+                break;
+            case "highPrice":
+                sortMethod = "m.menuPrice DESC";
+                break;
+            case "distance":
+                sortMethod = "p.placeDistance ASC";
+                break;
+        }
         List<Menu> resultList = new ArrayList<>();
-        em.createQuery("select b from Bookmark b join fetch b.menu m join fetch m.place  where b.userId = :uniqueId", Bookmark.class)
+        em.createQuery("select b from Bookmark b join fetch b.menu m join fetch m.place p where b.userId = :uniqueId order by " + sortMethod, Bookmark.class)
                 .setParameter("uniqueId", userId)
                 .getResultStream().forEach(bookmark -> resultList.add(bookmark.getMenu()));
         return resultList;

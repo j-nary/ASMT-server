@@ -28,9 +28,10 @@ public class BookmarkController {
 
     @GetMapping("/api/bookmark")
     @Operation(summary = "북마크된 리스트 가져오기", description = "북마크 리스트는 무한스크롤 없이 모두 가져옵니다.")
-    public List<SearchDTO> getBookmark(@RequestParam String userId){
+    public List<SearchDTO> getBookmark(@RequestParam String userId,
+                                       @RequestParam String sortMethod){
 
-        return bookmarkService.getBookmarkedMenuList(userId);
+        return bookmarkService.getBookmarkedMenuList(userId, sortMethod);
     }
 
     @PostMapping("/api/bookmark")

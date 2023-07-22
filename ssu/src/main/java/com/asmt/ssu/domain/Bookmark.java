@@ -5,8 +5,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-@Entity
-@Getter
+@Entity  @Getter
 public class Bookmark {
 
     @Id @GeneratedValue

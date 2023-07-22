@@ -38,9 +38,9 @@ public class BookmarkService {
         bookmarkRepository.delete(bookmarkForm);
     }
 
-    public List<SearchDTO> getBookmarkedMenuList(String userId){
+    public List<SearchDTO> getBookmarkedMenuList(String userId, String sortMethod){
         List<SearchDTO> resultList = new ArrayList<>();
-        bookmarkRepository.getBookmarkedMenuList(userId).forEach(menu -> resultList.add(new SearchDTO(menu, true)));
+        bookmarkRepository.getBookmarkedMenuList(userId, sortMethod).forEach(menu -> resultList.add(new SearchDTO(menu, true)));
         return resultList;
     }
 
