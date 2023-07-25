@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Tag(name = "Rank", description = "랭킹 조회 / 반영 API")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RankController {
 
     private final RankService rankService;

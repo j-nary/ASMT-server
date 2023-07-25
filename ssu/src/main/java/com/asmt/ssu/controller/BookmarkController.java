@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Bookmark", description = "북마크 API")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 

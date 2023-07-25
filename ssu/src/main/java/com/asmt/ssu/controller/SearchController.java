@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Tag(name = "Search", description = "메뉴 리스트 반환 API")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
     private final SearchService searchService;
 
