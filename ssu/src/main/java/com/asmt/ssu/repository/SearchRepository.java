@@ -27,7 +27,7 @@ public class SearchRepository {
                 .setParameter("maxValue", searchForm.getMaximumPrice())
                 .setParameter("userId", searchForm.getUserId())
                 .setFirstResult((searchForm.getPage() - 1) * elementCountInPage)
-                .setMaxResults(searchForm.getPage() * elementCountInPage)
+                .setMaxResults(elementCountInPage)
                 .getResultList();
     }
 
@@ -48,7 +48,7 @@ public class SearchRepository {
                 .setParameter("maxValue", searchForm.getMaximumPrice())
                 .setParameter("userId", searchForm.getUserId())
                 .setFirstResult((searchForm.getPage() - 1) * elementCountInPage)
-                .setMaxResults(searchForm.getPage() * elementCountInPage );
+                .setMaxResults(elementCountInPage);
         for (int i = 0; i < searchForm.getSearchKeywordList().size(); i++) {
             resultQuery.setParameter("searchString" + i, "%" + searchForm.getSearchKeywordList().get(i) + "%");
         }
