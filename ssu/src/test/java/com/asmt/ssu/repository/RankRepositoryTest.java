@@ -2,6 +2,9 @@ package com.asmt.ssu.repository;
 
 import com.asmt.ssu.domain.Hit;
 import com.asmt.ssu.domain.Menu;
+import com.asmt.ssu.repository.impl.RankRepository;
+import com.asmt.ssu.repository.impl.SearchRepositoryImpl;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -21,7 +21,7 @@ class RankRepositoryTest {
     @Autowired
     private RankRepository rankRepository;
     @Autowired
-    private SearchRepository searchRepository;
+    private SearchRepositoryImpl searchRepositoryImpl;
 
     @Autowired
     private EntityManager em;

@@ -1,4 +1,4 @@
-package com.asmt.ssu.repository;
+package com.asmt.ssu.repository.impl;
 
 
 import com.asmt.ssu.domain.Bookmark;

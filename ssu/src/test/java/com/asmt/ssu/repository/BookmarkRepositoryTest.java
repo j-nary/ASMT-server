@@ -2,6 +2,8 @@ package com.asmt.ssu.repository;
 
 import com.asmt.ssu.domain.Bookmark;
 import com.asmt.ssu.form.BookmarkForm;
+import com.asmt.ssu.repository.impl.BookmarkRepository;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

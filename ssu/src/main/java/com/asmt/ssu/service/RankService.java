@@ -4,7 +4,7 @@ package com.asmt.ssu.service;
 import com.asmt.ssu.domain.Menu;
 import com.asmt.ssu.domain.School;
 import com.asmt.ssu.domain.SearchDTO;
-import com.asmt.ssu.repository.RankRepository;
+import com.asmt.ssu.repository.impl.RankRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

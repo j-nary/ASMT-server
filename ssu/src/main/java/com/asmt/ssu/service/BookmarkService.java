@@ -3,7 +3,7 @@ package com.asmt.ssu.service;
 
 import com.asmt.ssu.domain.SearchDTO;
 import com.asmt.ssu.form.BookmarkForm;
-import com.asmt.ssu.repository.BookmarkRepository;
+import com.asmt.ssu.repository.impl.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
