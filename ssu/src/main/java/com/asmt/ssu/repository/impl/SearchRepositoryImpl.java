@@ -87,7 +87,6 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
             case "distance":
                 return new OrderSpecifier<>(Order.ASC, p.placeDistance);
         }
-
         return null;
     }
 

@@ -4,7 +4,7 @@ package com.asmt.ssu.service;
 import com.asmt.ssu.domain.Menu;
 import com.asmt.ssu.domain.School;
 import com.asmt.ssu.domain.SearchDTO;
-import com.asmt.ssu.repository.impl.RankRepository;
+import com.asmt.ssu.repository.impl.RankRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RankService {
 
-    private final RankRepository rankRepository;
+    private final RankRepositoryImpl rankRepositoryImpl;
 
     public List<SearchDTO> getDailyRank(int rankCount, School school){
-        List<Menu> rankTopN = rankRepository.findRankTopN(rankCount, school);
+        List<Menu> rankTopN = rankRepositoryImpl.findRankTopN(rankCount, school);
         List<SearchDTO> resultList = new ArrayList<>();
         for (Menu menu : rankTopN) {
             resultList.add(new SearchDTO(menu));
@@ -31,6 +31,6 @@ public class RankService {
     }
 
     public void addMenuToRank(Long menuId){
-        rankRepository.save(menuId);
+        rankRepositoryImpl.save(menuId);
     }
 }

@@ -2,7 +2,7 @@ package com.asmt.ssu.repository;
 
 import com.asmt.ssu.domain.Hit;
 import com.asmt.ssu.domain.Menu;
-import com.asmt.ssu.repository.impl.RankRepository;
+import com.asmt.ssu.repository.impl.RankRepositoryImpl;
 import com.asmt.ssu.repository.impl.SearchRepositoryImpl;
 
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
-class RankRepositoryTest {
+class RankRepositoryImplTest {
     @Autowired
-    private RankRepository rankRepository;
+    private RankRepositoryImpl rankRepositoryImpl;
     @Autowired
     private SearchRepositoryImpl searchRepositoryImpl;
 

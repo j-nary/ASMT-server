@@ -2,7 +2,7 @@ package com.asmt.ssu.repository;
 
 import com.asmt.ssu.domain.Bookmark;
 import com.asmt.ssu.form.BookmarkForm;
-import com.asmt.ssu.repository.impl.BookmarkRepository;
+import com.asmt.ssu.repository.impl.BookmarkRepositoryImpl;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,16 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class BookmarkRepositoryTest {
+class BookmarkRepositoryImplTest {
 
     @Autowired
-    private BookmarkRepository bookmarkRepository;
+    private BookmarkRepositoryImpl bookmarkRepositoryImpl;
 
 
     @Test
     void save() {
         BookmarkForm bookmarkForm = new BookmarkForm("user1",4L);
-        Bookmark saved = bookmarkRepository.save(bookmarkForm);
+        Bookmark saved = bookmarkRepositoryImpl.save(bookmarkForm);
 
         Assertions.assertThat(saved.getUserId()).isEqualTo("user1");
         Assertions.assertThat(saved.getMenu().getId()).isEqualTo(4L);
@@ -32,14 +32,14 @@ class BookmarkRepositoryTest {
     @Test
     void delete() {
         BookmarkForm bookmarkForm = new BookmarkForm("user1",4L);
-        Bookmark saved = bookmarkRepository.save(bookmarkForm);
+        Bookmark saved = bookmarkRepositoryImpl.save(bookmarkForm);
 
-        bookmarkRepository.findById(saved.getId());
+        bookmarkRepositoryImpl.findById(saved.getId());
 
 
-        bookmarkRepository.delete(bookmarkForm);
+        bookmarkRepositoryImpl.delete(bookmarkForm);
 
-        Assertions.assertThat(bookmarkRepository.findById(saved.getId())).isNull();
+        Assertions.assertThat(bookmarkRepositoryImpl.findById(saved.getId())).isNull();
     }
 
     @Test
@@ -49,8 +49,8 @@ class BookmarkRepositoryTest {
     @Test
     void findBookmarksByUniqueIdAndMenuId() {
         BookmarkForm bookmarkForm = new BookmarkForm("user1",4L);
-        Bookmark saved = bookmarkRepository.save(bookmarkForm);
+        Bookmark saved = bookmarkRepositoryImpl.save(bookmarkForm);
 
-        Assertions.assertThat(bookmarkRepository.findBookmarkByUniqueIdAndMenuId(bookmarkForm)).isNotNull();
+        Assertions.assertThat(bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm)).isNotNull();
     }
 }

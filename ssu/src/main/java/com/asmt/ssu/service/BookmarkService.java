@@ -3,7 +3,7 @@ package com.asmt.ssu.service;
 
 import com.asmt.ssu.domain.SearchDTO;
 import com.asmt.ssu.form.BookmarkForm;
-import com.asmt.ssu.repository.impl.BookmarkRepository;
+import com.asmt.ssu.repository.impl.BookmarkRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,30 +17,30 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class BookmarkService {
-    private final BookmarkRepository bookmarkRepository;
+    private final BookmarkRepositoryImpl bookmarkRepositoryImpl;
 
     public void addBookmark(BookmarkForm bookmarkForm){
         validateDuplicate(bookmarkForm);
-        bookmarkRepository.save(bookmarkForm);
+        bookmarkRepositoryImpl.save(bookmarkForm);
     }
 
     private void validateDuplicate(BookmarkForm bookmarkForm){
-        bookmarkRepository.findBookmarkByUniqueIdAndMenuId(bookmarkForm).ifPresent(b -> {
+        bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm).ifPresent(b -> {
             throw new IllegalStateException("이미 북마크된 메뉴입니다.");
         });
 
     }
 
     public void removeBookmark(BookmarkForm bookmarkForm){
-        if (bookmarkRepository.findBookmarkByUniqueIdAndMenuId(bookmarkForm).isEmpty())
+        if (bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm).isEmpty())
             throw new IllegalStateException("북마크되지 않았습니다.");
 
-        bookmarkRepository.delete(bookmarkForm);
+        bookmarkRepositoryImpl.delete(bookmarkForm);
     }
 
     public List<SearchDTO> getBookmarkedMenuList(String userId, String sortMethod){
         List<SearchDTO> resultList = new ArrayList<>();
-        bookmarkRepository.getBookmarkedMenuList(userId, sortMethod).forEach(menu -> resultList.add(new SearchDTO(menu, true)));
+        bookmarkRepositoryImpl.getBookmarkedMenuList(userId, sortMethod).forEach(menu -> resultList.add(new SearchDTO(menu, true)));
         return resultList;
     }
 

@@ -1,8 +1,14 @@
 package com.asmt.ssu.repository.impl;
 
+import static com.asmt.ssu.domain.QHit.*;
+
 import com.asmt.ssu.domain.Hit;
 import com.asmt.ssu.domain.Menu;
+import com.asmt.ssu.domain.QHit;
 import com.asmt.ssu.domain.School;
+import com.asmt.ssu.repository.custom.RankRepositoryCustom;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,25 +18,28 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class RankRepository {
+public class RankRepositoryImpl implements RankRepositoryCustom {
     private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
 
+    @Override
     public List<Menu> findRankTopN(int n, School school){
         LocalDateTime now = LocalDateTime.now();
-        return em.createQuery("select h.menu from Hit h join fetch h.menu.place p where h.hitTime between :yesterday and :now and p.school = :school group by h.menu order by count(h) desc ", Menu.class)
-                .setParameter("yesterday",now.minusDays(1))
-                .setParameter("now", now)
-                .setParameter("school",school)
-                .setFirstResult(0)
-                .setMaxResults(n)
-                .getResultList();
+        return queryFactory.
+            select(hit.menu)
+            .from(hit)
+            .join(hit.menu.place).fetchJoin()
+            .where(hit.hitTime.between(now.minusDays(1), now),
+                hit.menu.place.school.eq(school))
+            .groupBy(hit.menu)
+            .orderBy(hit.count().desc())
+            .fetch();
     }
 
+    @Override
     public void save(Long menuId){
         Menu menu = em.getReference(Menu.class, menuId);
         Hit hit = Hit.builder().menu(menu).hitTime(LocalDateTime.now()).build();
         em.persist(hit);
     }
-
-
 }

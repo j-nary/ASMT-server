@@ -7,4 +7,5 @@ import com.asmt.ssu.form.SearchForm;
 
 public interface SearchRepositoryCustom {
 	List<SearchDTO> findResultByLowPrice(SearchForm searchForm);
+
 }
