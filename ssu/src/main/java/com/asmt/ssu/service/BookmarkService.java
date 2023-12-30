@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -32,15 +33,14 @@ public class BookmarkService {
     public void removeBookmark(BookmarkForm bookmarkForm){
         if (bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm).isEmpty())
             throw new IllegalStateException("북마크되지 않았습니다.");
-
         bookmarkRepositoryImpl.delete(bookmarkForm);
     }
 
     public List<SearchDTO> getBookmarkedMenuList(String userId, String sortMethod){
-        List<SearchDTO> resultList = new ArrayList<>();
-        bookmarkRepositoryImpl.getBookmarkedMenuList(userId, sortMethod)
-            .forEach(menu -> resultList.add(new SearchDTO(menu, true)));
-        return resultList;
+        return bookmarkRepositoryImpl.getBookmarkedMenuList(userId, sortMethod)
+            .stream()
+            .map(menu -> new SearchDTO(menu, true))
+            .collect(Collectors.toList());
     }
 
 

@@ -59,11 +59,4 @@ public class SearchForm {
         this.school = school;
     }
 
-    public void processZeroPrice(){
-        if (minimumPrice == 0 && showZeroPriceItems){
-            this.minimumPrice=1;
-        }
-    }
-
-
 }

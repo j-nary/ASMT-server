@@ -14,7 +14,6 @@ public class SearchService {
 
     private final SearchRepositoryImpl searchRepositoryImpl;
     public List<SearchDTO> getResult(SearchForm searchForm){
-        searchForm.processZeroPrice();
         try {
             return searchRepositoryImpl.findResultByLowPrice(searchForm);
         }

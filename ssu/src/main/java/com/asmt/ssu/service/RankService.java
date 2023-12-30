@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,9 +24,8 @@ public class RankService {
 
     public List<SearchDTO> getDailyRank(int rankCount, School school){
         List<Menu> rankTopN = rankRepositoryImpl.findRankTopN(rankCount, school);
-        List<SearchDTO> resultList = new ArrayList<>();
-        rankTopN.forEach(menu -> resultList.add(new SearchDTO(menu)));
-        return resultList;
+
+        return rankTopN.stream().map(SearchDTO::new).collect(Collectors.toList());
     }
 
     public void addMenuToRank(Long menuId){
