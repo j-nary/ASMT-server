@@ -24,9 +24,7 @@ public class RankService {
     public List<SearchDTO> getDailyRank(int rankCount, School school){
         List<Menu> rankTopN = rankRepositoryImpl.findRankTopN(rankCount, school);
         List<SearchDTO> resultList = new ArrayList<>();
-        for (Menu menu : rankTopN) {
-            resultList.add(new SearchDTO(menu));
-        }
+        rankTopN.forEach(menu -> resultList.add(new SearchDTO(menu)));
         return resultList;
     }
 

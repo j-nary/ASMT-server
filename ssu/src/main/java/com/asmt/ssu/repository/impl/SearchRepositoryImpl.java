@@ -57,8 +57,8 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
            )
             .from(m)
             .join(m.place, p)
-            .leftJoin(b).on(b.menu.eq(m).
-                and(b.userId.eq(searchForm.getUserId())))
+            .leftJoin(b).on(b.menu.eq(m)
+                .and(b.userId.eq(searchForm.getUserId())))
             .where(p.school.eq(searchForm.getSchool())
                 .and(m.menuPrice.between(searchForm.getMinimumPrice(), searchForm.getMaximumPrice())),
                 searchKeyword(searchForm))
@@ -72,9 +72,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom {
         if (searchForm.getSearchKeywordList() == null || searchForm.getSearchKeywordList().size() == 0)
             return null;
         BooleanBuilder builder = new BooleanBuilder();
-        for(String keyword : searchForm.getSearchKeywordList()){
-            builder.or(m.menuName.contains(keyword));
-        }
+        searchForm.getSearchKeywordList().forEach(keyword -> builder.or(m.menuName.contains(keyword)));
         return builder;
     }
 

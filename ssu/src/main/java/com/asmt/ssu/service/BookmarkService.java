@@ -25,10 +25,8 @@ public class BookmarkService {
     }
 
     private void validateDuplicate(BookmarkForm bookmarkForm){
-        bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm).ifPresent(b -> {
-            throw new IllegalStateException("이미 북마크된 메뉴입니다.");
-        });
-
+        bookmarkRepositoryImpl.findBookmarkByUniqueIdAndMenuId(bookmarkForm)
+            .ifPresent(b -> {throw new IllegalStateException("이미 북마크된 메뉴입니다.");});
     }
 
     public void removeBookmark(BookmarkForm bookmarkForm){
@@ -40,7 +38,8 @@ public class BookmarkService {
 
     public List<SearchDTO> getBookmarkedMenuList(String userId, String sortMethod){
         List<SearchDTO> resultList = new ArrayList<>();
-        bookmarkRepositoryImpl.getBookmarkedMenuList(userId, sortMethod).forEach(menu -> resultList.add(new SearchDTO(menu, true)));
+        bookmarkRepositoryImpl.getBookmarkedMenuList(userId, sortMethod)
+            .forEach(menu -> resultList.add(new SearchDTO(menu, true)));
         return resultList;
     }
 

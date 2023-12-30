@@ -65,18 +65,5 @@ public class SearchForm {
         }
     }
 
-    public String makeSortResult() {
-        if (sortMethod.equals("lowPrice")){
-            return "m.menuPrice asc";
-        }
-        else if (sortMethod.equals("highPrice")){
-            return "m.menuPrice desc";
-        }
-        else if (sortMethod.equals("distance")){
-            return "p.placeDistance asc";
-        }
-        return null;
-    }
-
 
 }
